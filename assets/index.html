@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StatusQuo</title>
+  <meta name="Description" content="Simple status monitoring for websites">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css">
+  <link href="https://unpkg.com/vuetify@0.14.5/dist/vuetify.min.css" rel="stylesheet" type="text/css"></link>
+  <link href="styles.css" rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-navigation-drawer
+        persistent
+        :mini-variant="miniVariant"
+        :clipped="clipped"
+        v-model="drawer"
+        dark
+      >
+        <v-list>
+          <v-list-item
+            v-for="(item, i) in menuitems"
+            :key="i"
+          >
+            <v-list-tile value="true">
+              <v-list-tile-action>
+                <v-icon class="grey--text text--lighten-2" v-html="item.icon"></v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title v-text="item.title"></v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+      <v-toolbar class="red" fixed dark>
+        
+        <v-toolbar-side-icon @click.native.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <!--
+        <v-btn 
+          icon
+          @click.native.stop="miniVariant = !miniVariant"
+        >
+          <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
+        </v-btn>
+        
+          <v-btn
+          icon
+          @click.native.stop="clipped = !clipped"
+        >
+          <v-icon>web</v-icon>
+        </v-btn>
+        <v-btn
+          icon
+          @click.native.stop="fixed = !fixed"
+        >
+          <v-icon>remove</v-icon>
+        </v-btn>
+        -->
+        <v-toolbar-title v-text="title"></v-toolbar-title>
+        <v-spacer></v-spacer>
+        <!--
+        <v-btn
+          icon
+          @click.native.stop="rightDrawer = !rightDrawer"
+        >
+          <v-icon>menu</v-icon>
+        </v-btn>
+        -->
+      </v-toolbar>
+      <main>
+        <v-container fluid>
+          <page>
+          </page>
+        </v-container>
+      </main>
+      <!--
+      <v-navigation-drawer
+        temporary
+        :right="right"
+        v-model="rightDrawer"
+      >
+        <v-list>
+          <v-list-item>
+            <v-list-tile @click.native="right = !right">
+              <v-list-tile-action>
+                <v-icon light>compare_arrows</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
+            </v-list-tile>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+      -->
+      <v-footer :fixed="fixed">
+        <span>&copy; 2017</span>
+      </v-footer>
+    </v-app>
+  </div>
+
+<!--
+  <script type="text/x-template" id="page">
+    <v-layout column align-center>
+      <div>
+        <img src="./v.png" alt="Vuetify.js" class="mb-5" height="100px" />
+      </div>
+      <blockquote>
+        &#8220;First, solve the problem. Then, write the code.&#8221;
+        <footer>
+          <small>
+            <em>&mdash;John Johnson</em>
+          </small>
+        </footer>
+      </blockquote>
+    </v-layout>
+  </script>
+  -->
+
+
+
+    <script type="text/x-template" id="page">        
+      <v-list two-line subheader>
+          <v-list-tile avatar v-for="item in items" v-bind:key="item.title">
+            <v-list-tile-avatar>
+              <v-icon v-bind:class="[item.iconClass]">{{ item.icon }}</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+              <v-list-tile-sub-title>{{ item.url }}</v-list-tile-sub-title>
+            </v-list-tile-content>
+            <!--
+            <v-list-tile-action>
+              <v-btn icon ripple>
+                <v-icon class="grey--text text--lighten-1">info</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+            -->
+          </v-list-tile>
+        </v-list>
+</script>
+  
+<!--
+  <script>
+  export default {
+    data () {
+      return {
+        items: [
+          { icon: 'folder', iconClass: 'grey lighten-1 white--text', title: 'Photos', subtitle: 'Jan 9, 2014' },
+          { icon: 'folder', iconClass: 'grey lighten-1 white--text', title: 'Recipes', subtitle: 'Jan 17, 2014' },
+          { icon: 'folder', iconClass: 'grey lighten-1 white--text', title: 'Work', subtitle: 'Jan 28, 2014' }
+        ],
+        items2: [
+          { icon: 'assignment', iconClass: 'blue white--text', title: 'Vacation itinerary', subtitle: 'Jan 20, 2014' },
+          { icon: 'call_to_action', iconClass: 'amber white--text', title: 'Kitchen remodel', subtitle: 'Jan 10, 2014' },
+        ]
+      }
+    }
+  }
+</script>
+-->
+
+<!--
+<component v-bind:is="currentView">
+   component changes when vm.currentView changes! 
+</component>
+-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@2.4.2/dist/vue.js"></script>
+  <script src="https://unpkg.com/vuetify@0.14.5/dist/vuetify.js"></script>
+  <script>
+/*
+var vm = new Vue({
+  el: '#example',
+  data: {
+    currentView: 'monitoring'
+  },
+  components: {
+    monitoring: {  },
+    posts: {  },
+    archive: {  }
+  }
+})
+*/
+/*
+  var Home = {
+    template: '<p>Welcome home!</p>'
+  }
+
+var vm = new Vue({
+  el: '#example',
+  data: {
+    currentView: Home
+  }
+})
+*/
+
+Vue.component('page', {
+  template: '#page',
+  data: function() {
+    return {
+      items: []
+    }
+  },
+  methods: {
+    loadData: function () {
+      /*
+      $.get('/api/checks/', function (response) {
+        this.items = response.items;
+      }.bind(this));
+      */
+      $.get('/api/checks/')
+        .then(response => {
+        console.log(response)
+        for (var i = 0; i < response.length; i++) {
+          if (response[i].is_up) {
+            console.log("is UP");
+            response[i].icon = "check";
+            response[i].iconClass = "green white--text";
+          } else {
+            console.log("is down");
+            response[i].icon = "clear";
+            response[i].iconClass = "red white--text";
+          }
+        }
+        this.items = response;
+      });
+/*
+      for (var i = 0; i < data.length; i++) {
+        if (data.is_up) {
+          console.log("is UP");
+          data.icon = "check";
+          data.iconClass = "green white--text";
+        } else {
+          console.log("is down");
+          data.icon = "clear";
+          data.iconClass = "red white--text";
+        }
+      }
+      this.items = data;
+*/
+
+/*
+      $.get('/api/checks/', (data) => {
+        console.log("Fetched results");
+        //list
+        for (var i = 0; i < data.length; i++) {
+          if (data.is_up) {
+            console.log("is UP");
+            data.icon = "check";
+            data.iconClass = "green white--text";
+          } else {
+            console.log("is down");
+            data.icon = "clear";
+            data.iconClass = "red white--text";
+          }
+        }
+        this.items = data;
+      }).error((err) => console.log(err));
+      */
+    }
+  },
+  /*
+  ready: function () {
+    this.loadData();
+
+    setInterval(function () {
+      this.loadData();
+    }.bind(this), 30000); 
+  },
+  */
+  created: function () {
+    this.loadData();
+
+    setInterval(function () {
+      this.loadData();
+    }.bind(this), 30000); 
+  }
+});
+
+
+/*
+    Vue.component('page', {
+      template: '#page',
+      data: function() {
+        return {
+          items: [
+          { icon: 'pause', iconClass: 'grey lighten-1 white--text', title: 'Old HCM', subtitle: 'Jan 9, 2014' },
+          { icon: 'check', iconClass: 'green white--text', title: 'Benefits', subtitle: 'Jan 17, 2014' },
+          { icon: 'clear', iconClass: 'red white--text', title: 'MyView', subtitle: 'Jan 17, 2014' },
+          { icon: 'check', iconClass: 'green white--text', title: 'Capita', subtitle: 'Jan 28, 2014' },
+          { icon: 'check', iconClass: 'green white--text', title: 'Vacation itinerary', subtitle: 'Jan 20, 2014' },
+          { icon: 'clear', iconClass: 'red white--text', title: 'Kitchen remodel', subtitle: 'Jan 10, 2014' },
+        ]
+        }
+      }
+    })
+*/
+
+    new Vue({
+      el: '#app',
+      data: {
+        clipped: true,
+        drawer: true,
+        fixed: false,
+        menuitems: [
+          { icon: 'timeline', title: 'Monitor' }
+        ],
+        miniVariant: false,
+        //right: true,
+        //rightDrawer: false,
+        title: 'StatusQuo'
+      }
+    })
+  </script>
+
+
+</body>
+</html>
