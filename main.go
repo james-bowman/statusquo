@@ -24,7 +24,6 @@ func staticHandler(rw http.ResponseWriter, req *http.Request) {
 }
 
 func apiHandler(w http.ResponseWriter, req *http.Request) {
-	log.Printf("Request received '%s'\n", req.URL.Path)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(portfolio.checks); err != nil {

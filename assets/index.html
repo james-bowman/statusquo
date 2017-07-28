@@ -18,6 +18,7 @@
         persistent
         :mini-variant="miniVariant"
         :clipped="clipped"
+        enable-resize-watcher
         v-model="drawer"
         dark
       >
@@ -141,8 +142,9 @@
             -->
           </v-list-tile>
         </v-list>
-</script>
-  
+    </script>
+    
+
 <!--
   <script>
   export default {
@@ -207,11 +209,6 @@ Vue.component('page', {
   },
   methods: {
     loadData: function () {
-      /*
-      $.get('/api/checks/', function (response) {
-        this.items = response.items;
-      }.bind(this));
-      */
       $.get('/api/checks/')
         .then(response => {
         console.log(response)
@@ -227,40 +224,8 @@ Vue.component('page', {
           }
         }
         this.items = response;
-      });
-/*
-      for (var i = 0; i < data.length; i++) {
-        if (data.is_up) {
-          console.log("is UP");
-          data.icon = "check";
-          data.iconClass = "green white--text";
-        } else {
-          console.log("is down");
-          data.icon = "clear";
-          data.iconClass = "red white--text";
-        }
-      }
-      this.items = data;
-*/
+      }).catch((err) => console.log(err));
 
-/*
-      $.get('/api/checks/', (data) => {
-        console.log("Fetched results");
-        //list
-        for (var i = 0; i < data.length; i++) {
-          if (data.is_up) {
-            console.log("is UP");
-            data.icon = "check";
-            data.iconClass = "green white--text";
-          } else {
-            console.log("is down");
-            data.icon = "clear";
-            data.iconClass = "red white--text";
-          }
-        }
-        this.items = data;
-      }).error((err) => console.log(err));
-      */
     }
   },
   /*
@@ -280,25 +245,6 @@ Vue.component('page', {
     }.bind(this), 30000); 
   }
 });
-
-
-/*
-    Vue.component('page', {
-      template: '#page',
-      data: function() {
-        return {
-          items: [
-          { icon: 'pause', iconClass: 'grey lighten-1 white--text', title: 'Old HCM', subtitle: 'Jan 9, 2014' },
-          { icon: 'check', iconClass: 'green white--text', title: 'Benefits', subtitle: 'Jan 17, 2014' },
-          { icon: 'clear', iconClass: 'red white--text', title: 'MyView', subtitle: 'Jan 17, 2014' },
-          { icon: 'check', iconClass: 'green white--text', title: 'Capita', subtitle: 'Jan 28, 2014' },
-          { icon: 'check', iconClass: 'green white--text', title: 'Vacation itinerary', subtitle: 'Jan 20, 2014' },
-          { icon: 'clear', iconClass: 'red white--text', title: 'Kitchen remodel', subtitle: 'Jan 10, 2014' },
-        ]
-        }
-      }
-    })
-*/
 
     new Vue({
       el: '#app',

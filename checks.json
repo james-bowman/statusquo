@@ -1,5 +1,45 @@
 [
         {
+            "name": "MyView",
+            "url": "https://saas.ngahr.com/hrg/dashboard/dashboard-ui/index.html#/landing",
+            "frequency": "30s"
+        },
+        {
+            "name": "MyChoice",
+            "url": "https://ssl.perquisite.net/RewardCentre/M/Home",
+            "frequency": "30s"
+        },
+        {
+            "name": "MyBenefits",
+            "url": "https://mybenefitshome.rewardgateway.co.uk/Authentication/Login",
+            "frequency": "30s"
+        },
+        {
+            "name": "Pensions",
+            "url": "https://www.legalandgeneral.com/workplacebenefits/microsites/hrg",
+            "frequency": "30s"
+        },
+        {
+            "name": "Childcare",
+            "url": "https://myaccount.computersharevoucherservices.com/Login/Login.aspx",
+            "frequency": "30s"
+        },
+        {
+            "name": "The Knowledge",
+            "url": "https://theknowledgeapp.info",
+            "frequency": "30s"
+        },
+        {
+            "name": "Capita Travel and Events",
+            "url": "https://www.capitatravelandevents.co.uk/Portal/",
+            "frequency": "30s"
+        },
+        {
+            "name": "Capita Travel - Evolvi",
+            "url": "https://ldt.evolvi.co.uk/",
+            "frequency": "30s"
+        },
+        {
             "name": "Control - Up",
             "url": "http://www.google.com",
             "frequency": "30s"

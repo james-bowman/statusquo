@@ -41,11 +41,11 @@ func (p *Portfolio) Start() {
 	fmt.Printf("Checks: %d = %v\n", len(p.checks), p.checks)
 	for i, check := range p.checks {
 		log.Printf("Initiating check %d: '%s' [%s] (%s)\n", i+1, check.Name, check.URL, check.Frequency)
-		go p.checks[i].Monitor()
+		go p.checks[i].monitor()
 	}
 }
 
-func (c *Check) Monitor() {
+func (c *Check) monitor() {
 	for {
 		c.ping()
 
