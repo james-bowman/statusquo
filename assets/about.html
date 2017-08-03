@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StatusQuo</title>
+    <meta name="Description" content="Simple status monitoring for websites">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css">
+    <link href="https://unpkg.com/vuetify@0.14.5/dist/vuetify.min.css" rel="stylesheet" type="text/css"></link>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <v-navigation-drawer
+          persistent
+          :mini-variant="miniVariant"
+          :clipped="clipped"
+          enable-resize-watcher
+          v-model="drawer"
+          dark
+        >
+          <v-list>
+            <v-list-item
+              v-for="(item, i) in menuitems"
+              :key="i"
+            >
+              <v-list-tile value="true" v-bind:href="item.href" v-on:click="go">
+                <v-list-tile-action>
+                  <v-icon class="grey--text text--lighten-2" v-html="item.icon"></v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title v-text="item.title"></v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
+        <v-toolbar class="red" fixed dark>
+          <v-toolbar-side-icon @click.native.stop="drawer = !drawer"></v-toolbar-side-icon>
+          <v-toolbar-title v-text="title"></v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <main>
+          <v-container fluid>
+            <page>
+            </page>
+          </v-container>
+        </main>
+        <v-footer :fixed="fixed">
+          <span>&copy; 2017</span>
+        </v-footer>
+      </v-app>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue@2.4.2/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuetify@0.14.5/dist/vuetify.js"></script>
+
+    <script type="text/x-template" id="about">        
+      <v-layout column align-center>
+        <b>StatusQuo</b>
+        <i>Simple status monitoring for websites</i>
+        &nbsp;
+        <v-icon>fa-github</v-icon>
+        
+        <a href="http://github.com/james-bowman/statusquo"><v-icon>fa-github</v-icon></a>
+          
+      </v-layout>
+    </script>
+
+    <script>
+      Vue.component('page', {
+        template: '#about',
+      })
+    </script>
+
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          clipped: true,
+          drawer: true,
+          fixed: false,
+          menuitems: [
+            { id: '0', icon: 'timeline', title: 'Monitoring', href: '/'},
+            { id: '1', icon: 'info_outline', title: 'About', href: '/about.html'}
+          ],
+          miniVariant: false,
+          title: 'StatusQuo',
+        }
+      })
+    </script>
+
+  </body>
+</html>

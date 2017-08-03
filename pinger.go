@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math"
 	"net"
 	"net/http"
 	"os"
@@ -13,10 +14,19 @@ import (
 var portfolio *Portfolio
 
 type Check struct {
-	Name      string `json:"name"`
-	URL       string `json:"url"`
-	Frequency string `json:"frequency"`
-	IsUp      bool   `json:"is_up"`
+	Name             string  `json:"name"`
+	URL              string  `json:"url"`
+	Frequency        string  `json:"frequency"`
+	IsUp             bool    `json:"is_up"`
+	UpTime           float64 `json:"uptime"`
+	AvgResponseTime  int64   `json:"avg_response_time"`
+	ApdexT           string  `json:"apdex_threshold"`
+	Apdex            float64 `json:"apdex"`
+	SatisfiedCount   float64 `json:"satisfied_count"`
+	ToleratingCount  float64 `json:"tolerating_count"`
+	FrustratingCount float64 `json:"frustrating_count"`
+	ErrorCount       float64 `json:"error_count"`
+	RequestCount     float64 `json:"request_count"`
 }
 
 type Portfolio struct {
@@ -66,14 +76,18 @@ func (c *Check) ping() {
 		Transport: &transport,
 	}
 
-	//start := time.Now()
+	start := time.Now()
 	resp, err := client.Head(c.URL)
-	//elapsed := time.Now().UnixNano() - start.UnixNano()
+	elapsed := time.Now().UnixNano() - start.UnixNano()
+
+	c.RequestCount++
 
 	if err != nil {
 		if c.IsUp {
 			log.Printf("DOWN '%s' [%s] with error: %v\n", c.Name, c.URL, err.Error())
 		}
+		c.ErrorCount++
+		c.updateMetrics()
 		c.IsUp = false
 		return
 	}
@@ -83,6 +97,8 @@ func (c *Check) ping() {
 		if c.IsUp {
 			log.Printf("DOWN '%s' [%s] with code: %d\n", c.Name, c.URL, resp.StatusCode)
 		}
+		c.ErrorCount++
+		c.updateMetrics()
 		c.IsUp = false
 		return
 	}
@@ -90,5 +106,30 @@ func (c *Check) ping() {
 	if !c.IsUp {
 		log.Printf("UP '%s' [%s]\n", c.Name, c.URL)
 	}
+
+	threshold, err := time.ParseDuration(c.ApdexT)
+
+	if err != nil {
+		threshold = time.Duration(2 * time.Second)
+		c.ApdexT = threshold.String()
+		log.Printf("Setting Apdex threshold for '%s' to %s\n", c.Name, c.ApdexT)
+	}
+
+	c.AvgResponseTime = (c.AvgResponseTime*(int64(c.RequestCount)-1) + elapsed) / int64(c.RequestCount)
+
+	if elapsed < threshold.Nanoseconds() {
+		c.SatisfiedCount++
+	} else if elapsed < (threshold.Nanoseconds() * 4) {
+		c.ToleratingCount++
+	} else {
+		c.FrustratingCount++
+	}
+
+	c.updateMetrics()
 	c.IsUp = true
+}
+
+func (c *Check) updateMetrics() {
+	c.Apdex = (c.SatisfiedCount + (c.ToleratingCount / 2.0)) / c.RequestCount
+	c.UpTime = math.Floor(((c.RequestCount - c.ErrorCount) / c.RequestCount) * 100)
 }
