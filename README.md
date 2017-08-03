@@ -9,7 +9,7 @@ A simple but functional, responsive web application that monitors registered URL
 * [Apdex score](https://en.wikipedia.org/wiki/Apdex) (along with % satisfied, tolerating, frustrated)
 * frequency of check
 
-![Screenshot](https://github.com/james-bowman/statusquo/screenshot.png "StatusQuo Screenshot")
+![Screenshot](https://github.com/james-bowman/statusquo/blob/master/screenshot.png "StatusQuo Screenshot")
 
 The application is deployed as a single, self contained, binary executable only requiring a separate .json configuration file to define the details of the websites/endpoints to monitor.
 
